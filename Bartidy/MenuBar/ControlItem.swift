@@ -30,12 +30,12 @@ final class ControlItem {
         // Divider must be RIGHT of third-party icons to push them left when expanded
         let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
         if UserDefaults.standard.object(forKey: dividerKey) == nil {
-            UserDefaults.standard.set(999, forKey: dividerKey)
+            UserDefaults.standard.set(200, forKey: dividerKey)
         }
         
         let chevronKey = "NSStatusItem Preferred Position Bartidy_Chevron"
         if UserDefaults.standard.object(forKey: chevronKey) == nil {
-            UserDefaults.standard.set(1000, forKey: chevronKey)
+            UserDefaults.standard.set(210, forKey: chevronKey)
         }
         
         // NOW assign autosaveName (system reads UserDefaults at this moment)
