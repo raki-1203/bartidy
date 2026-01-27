@@ -4,5 +4,9 @@
   "session_ids": [
     "ses_407292ac3ffeyMmYPs5FCEynEi"
   ],
-  "plan_name": "preferredPosition-fix"
+  "plan_name": "preferredPosition-fix",
+  "status": "blocked_on_manual_verification",
+  "blocked_reason": "Tasks 2 & 3 require manual GUI interaction (clicking menubar, observing icon hiding)",
+  "completed_tasks": ["Task 1: Code change", "Task 1b: Notch Mac fix"],
+  "blocked_tasks": ["Task 2: Click verification", "Task 3: Persistence test"]
 }

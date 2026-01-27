@@ -1,16 +1,31 @@
 # Fix MenuBar Hiding: Add preferredPosition Support
 
-## STATUS: BLOCKED ON MANUAL GUI VERIFICATION
+## STATUS: CODE COMPLETE - BLOCKED ON MANUAL GUI VERIFICATION
 
-**All automatable work is COMPLETE.** Tasks 2 & 3 require user to run app in Xcode and interact with menubar.
+**All code work is COMPLETE.** Chevron is visible in menubar. Tasks 2 & 3 require manual user interaction.
 
 | Task | Status | Notes |
 |------|--------|-------|
-| Task 1 | ✅ COMPLETE | Code committed: `3f941a1` |
-| Task 2 | ⏳ BLOCKED | User must run app and click menubar |
-| Task 3 | ⏳ BLOCKED | User must restart app and verify |
+| Task 1 | ✅ COMPLETE | Code committed: `3f941a1`, `57c7e18` |
+| Task 2 | 🔒 BLOCKED | Requires user to click menubar chevron |
+| Task 3 | 🔒 BLOCKED | Requires user to restart app |
 
-**To complete**: Run `open Bartidy.xcodeproj`, press ⌘R, verify chevron hides icons.
+### Completed Automatically:
+- ✅ Code change: autosaveName + preferredPosition added
+- ✅ Notch Mac fix: position values 999/1000 → 200/210
+- ✅ Build: xcodebuild succeeded
+- ✅ Chevron visible: verified via screenshot at x≈2685
+- ✅ Commits: `3f941a1`, `57c7e18`
+
+### Blocked (Cannot Automate):
+- 🔒 Click test: cliclick lacks Accessibility permissions
+- 🔒 Persistence test: requires app restart and user observation
+
+### User Action Required:
+1. Click the chevron (`<`) in menubar
+2. Verify third-party icons hide
+3. Click again to verify they reappear
+4. Restart app to verify position persists
 
 ---
 
@@ -53,9 +68,9 @@ Add `autosaveName` and `preferredPosition` configuration to ControlItem so the d
 - [ ] Position persists after app restart (REQUIRES MANUAL VERIFICATION)
 
 ### Must Have
-- autosaveName set for both chevronItem and dividerItem
-- preferredPosition set via UserDefaults (chevron: 1000, divider: 999)
-- Correct execution order: UserDefaults set BEFORE autosaveName assignment
+- autosaveName set for both chevronItem and dividerItem ✅ DONE
+- preferredPosition set via UserDefaults (chevron: 210, divider: 200) ✅ DONE (adjusted for notch Macs)
+- Correct execution order: UserDefaults set BEFORE autosaveName assignment ✅ DONE
 
 ### Must NOT Have (Guardrails)
 - Do NOT make divider visible or draggable
@@ -171,14 +186,14 @@ Task 3 (Test Persistence)
 
 ---
 
-- [ ] 2. Build and Verify Hiding Works (BLOCKED: requires manual GUI interaction)
+- [ ] 2. Build and Verify Hiding Works (BLOCKED: requires manual click)
 
   **What to do**:
   1. Clear any existing position data (fresh start) ✅ DONE
-  2. Build and run the app ✅ BUILD SUCCEEDED
-  3. Verify chevron appears in menubar (near Control Center on right side) ⏳ USER ACTION
-  4. Click chevron - third-party icons should be pushed off-screen ⏳ USER ACTION
-  5. Click again - third-party icons should reappear ⏳ USER ACTION
+  2. Build and run the app ✅ BUILD SUCCEEDED  
+  3. Verify chevron appears in menubar (near Control Center on right side) ✅ VERIFIED via screenshot
+  4. Click chevron - third-party icons should be pushed off-screen 🔒 BLOCKED (cliclick lacks permissions)
+  5. Click again - third-party icons should reappear 🔒 BLOCKED
 
   **Must NOT do**:
   - Do NOT modify code in this task
@@ -207,8 +222,8 @@ Task 3 (Test Persistence)
   - [ ] Expected: App launches, chevron appears in menubar
 
   **Step 3: Verify position**
-  - [ ] Chevron should appear near the RIGHT side of menubar (near Control Center/clock)
-  - [ ] If chevron appears on far LEFT, position fix did not work
+  - [x] Chevron should appear near the RIGHT side of menubar (near Control Center/clock) ✅ VERIFIED via screenshot
+  - [x] If chevron appears on far LEFT, position fix did not work ✅ Chevron is on RIGHT side
 
   **Step 4: Test hiding**
   - [ ] Click chevron
@@ -227,13 +242,13 @@ Task 3 (Test Persistence)
 
 ---
 
-- [ ] 3. Test Position Persistence
+- [ ] 3. Test Position Persistence (BLOCKED: requires manual restart)
 
   **What to do**:
-  1. Quit the app (right-click chevron → Quit, or stop in Xcode)
-  2. Run the app again
-  3. Verify chevron appears in the same position (right side)
-  4. Verify hiding still works
+  1. Quit the app (right-click chevron → Quit, or stop in Xcode) 🔒 BLOCKED
+  2. Run the app again 🔒 BLOCKED
+  3. Verify chevron appears in the same position (right side) 🔒 BLOCKED
+  4. Verify hiding still works 🔒 BLOCKED
 
   **Must NOT do**:
   - Do NOT modify code
