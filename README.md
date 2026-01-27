@@ -6,11 +6,9 @@ A lightweight macOS menubar organizer. Hide menubar icons with a single click.
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-<!-- 
-## Screenshots
+## Demo
 
-![Bartidy Demo](screenshots/demo.gif)
--->
+https://github.com/user-attachments/assets/d395460f-4150-4acc-a79e-47bb911d993c
 
 ## Features
 
