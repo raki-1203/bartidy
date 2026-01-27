@@ -26,16 +26,18 @@ final class ControlItem {
         dividerItem = NSStatusBar.system.statusItem(withLength: 0)
         
         // CRITICAL: Set preferred positions BEFORE assigning autosaveName
-        // Higher values = closer to Control Center (right side of menubar)
-        // Divider must be RIGHT of third-party icons to push them left when expanded
-        let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
-        if UserDefaults.standard.object(forKey: dividerKey) == nil {
-            UserDefaults.standard.set(200, forKey: dividerKey)
-        }
-        
+        // LOWER values = closer to Control Center (RIGHT side of menubar)
+        // HIGHER values = more to the LEFT
+        // Chevron must have LOWER value than Divider to stay visible when Divider expands
+        // (Ice uses: Chevron=0, Divider=1)
         let chevronKey = "NSStatusItem Preferred Position Bartidy_Chevron"
         if UserDefaults.standard.object(forKey: chevronKey) == nil {
-            UserDefaults.standard.set(210, forKey: chevronKey)
+            UserDefaults.standard.set(0, forKey: chevronKey)  // Rightmost (like Ice)
+        }
+        
+        let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
+        if UserDefaults.standard.object(forKey: dividerKey) == nil {
+            UserDefaults.standard.set(1, forKey: dividerKey)  // To the left of chevron
         }
         
         // NOW assign autosaveName (system reads UserDefaults at this moment)
