@@ -60,8 +60,7 @@ open Bartidy.xcodeproj
 
 If you find Bartidy useful, consider supporting the development:
 
-<!-- TODO: Add Buy Me a Coffee link when account is created -->
-<!-- [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/YOUR_USERNAME) -->
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-ff5e5b?style=flat&logo=ko-fi)](https://ko-fi.com/raki1203)
 
 ## Contributing
 
