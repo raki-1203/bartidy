@@ -19,11 +19,18 @@ https://github.com/user-attachments/assets/d395460f-4150-4acc-a79e-47bb911d993c
 
 ## Installation
 
+### Homebrew (Recommended)
+
+```bash
+brew tap raki-1203/bartidy https://github.com/raki-1203/bartidy
+brew install --cask bartidy
+```
+
 ### Download
 
 1. Go to [Releases](https://github.com/raki-1203/bartidy/releases)
-2. Download the latest `Bartidy.zip`
-3. Unzip and drag `Bartidy.app` to your Applications folder
+2. Download the latest `Bartidy.dmg`
+3. Open the DMG and drag `Bartidy.app` to your Applications folder
 4. Launch Bartidy
 
 ### Build from Source
