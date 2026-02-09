@@ -42,11 +42,13 @@ final class ControlItem {
     
     private static func ensureCorrectPositions(chevronKey: String, dividerKey: String) {
         let defaults = UserDefaults.standard
-        let migrationKey = "Bartidy_PositionMigration_v2"
+        let migrationKey = "Bartidy_PositionMigration_v3"
         
         if !defaults.bool(forKey: migrationKey) {
             defaults.removeObject(forKey: chevronKey)
             defaults.removeObject(forKey: dividerKey)
+            defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Chevron")
+            defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Divider")
             defaults.set(true, forKey: migrationKey)
         }
         
