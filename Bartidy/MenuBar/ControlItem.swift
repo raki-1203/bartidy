@@ -22,27 +22,13 @@ final class ControlItem {
     private(set) var state: HidingState = .showItems
     
     init() {
-        // NSStatusItem position: higher value = further left in menubar.
-        // Positions MUST be written to UserDefaults BEFORE setting autosaveName,
-        // because macOS reads positions at the moment autosaveName is assigned.
+        // NSStatusItem preferred position: distance from right edge of menubar (points).
+        // 0 = rightmost, higher = further left. macOS reads these values from UserDefaults
+        // at the moment autosaveName is assigned, so they must be written beforehand.
         let chevronKey = "NSStatusItem Preferred Position Bartidy_Chevron"
         let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
         
-        let chevronPos = UserDefaults.standard.object(forKey: chevronKey) as? CGFloat
-        let dividerPos = UserDefaults.standard.object(forKey: dividerKey) as? CGFloat
-        
-        if let cp = chevronPos, let dp = dividerPos {
-            if dp <= cp {
-                UserDefaults.standard.set(cp + 1, forKey: dividerKey)
-            }
-        } else if chevronPos == nil && dividerPos == nil {
-            UserDefaults.standard.set(CGFloat(0), forKey: chevronKey)
-            UserDefaults.standard.set(CGFloat(1), forKey: dividerKey)
-        } else if let cp = chevronPos {
-            UserDefaults.standard.set(cp + 1, forKey: dividerKey)
-        } else if let dp = dividerPos {
-            UserDefaults.standard.set(max(dp - 1, 0), forKey: chevronKey)
-        }
+        Self.ensureCorrectPositions(chevronKey: chevronKey, dividerKey: dividerKey)
         
         chevronItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         dividerItem = NSStatusBar.system.statusItem(withLength: 0)
@@ -52,6 +38,30 @@ final class ControlItem {
         
         setupButton()
         updateAppearance()
+    }
+    
+    private static func ensureCorrectPositions(chevronKey: String, dividerKey: String) {
+        let defaults = UserDefaults.standard
+        let migrationKey = "Bartidy_PositionMigration_v2"
+        
+        if !defaults.bool(forKey: migrationKey) {
+            defaults.removeObject(forKey: chevronKey)
+            defaults.removeObject(forKey: dividerKey)
+            defaults.set(true, forKey: migrationKey)
+        }
+        
+        let chevronPos = defaults.object(forKey: chevronKey) as? CGFloat
+        let dividerPos = defaults.object(forKey: dividerKey) as? CGFloat
+        
+        switch (chevronPos, dividerPos) {
+        case let (cp?, dp?) where dp > cp:
+            break
+        case let (cp?, _):
+            defaults.set(cp + 1, forKey: dividerKey)
+        default:
+            defaults.set(CGFloat(0), forKey: chevronKey)
+            defaults.set(CGFloat(1), forKey: dividerKey)
+        }
     }
     
     func toggle() {
