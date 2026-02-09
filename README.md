@@ -12,9 +12,10 @@ https://github.com/user-attachments/assets/d395460f-4150-4acc-a79e-47bb911d993c
 
 ## Features
 
-- **One-click hide/show** - Click the chevron icon to toggle menubar icon visibility
+- **One-click hide/show** - Click the chevron to toggle menubar icon visibility
+- **Visible divider** - A separator (`│`) shows where hidden icons begin
 - **Remembers position** - Your menubar arrangement is preserved across restarts
-- **Native macOS app** - Built with Swift and SwiftUI, lightweight and fast
+- **Native macOS app** - Built with Swift and AppKit, lightweight and fast
 - **Free and open source** - No subscriptions, no tracking
 
 ## Installation
@@ -24,6 +25,12 @@ https://github.com/user-attachments/assets/d395460f-4150-4acc-a79e-47bb911d993c
 ```bash
 brew tap raki-1203/bartidy https://github.com/raki-1203/bartidy
 brew install --cask bartidy
+```
+
+To upgrade:
+
+```bash
+brew upgrade bartidy
 ```
 
 ### Download
@@ -44,10 +51,13 @@ open Bartidy.xcodeproj
 
 ## Usage
 
-1. **Launch Bartidy** - A chevron icon (`<`) appears in your menubar
-2. **Arrange icons** - Hold `Cmd` and drag menubar icons to the left of the chevron
-3. **Hide icons** - Click the chevron to hide all icons to its left
+1. **Launch Bartidy** - A chevron (`<`) and a separator (`│`) appear in your menubar
+2. **Choose icons to hide** - Hold `Cmd` and drag the separator (`│`) to the right of the icons you want to hide
+3. **Hide icons** - Click the chevron (`<`) to hide all icons to the left of the separator
 4. **Show icons** - Click the chevron again to reveal hidden icons
+5. **Quit** - Right-click the chevron and select "Quit Bartidy"
+
+> **Tip**: You can also `Cmd`-drag individual icons to rearrange them. Icons to the left of the separator will be hidden, icons to the right will stay visible.
 
 ## Requirements
 
@@ -81,4 +91,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
-Inspired by [Bartender](https://www.macbartender.com/) and [Ice](https://github.com/jordanbaird/Ice).
+Inspired by [Bartender](https://www.macbartender.com/), [Ice](https://github.com/jordanbaird/Ice), and [Hidden Bar](https://github.com/dwarvesf/hidden).
