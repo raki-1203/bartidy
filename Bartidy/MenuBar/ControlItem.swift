@@ -2,6 +2,11 @@
 //  ControlItem.swift
 //  Bartidy
 //
+//  Hiding mechanism based on dwarvesf/Hidden Bar pattern:
+//  - Two NSStatusItems: chevron (toggle) + divider (expands to hide)
+//  - User Cmd-drags icons to the LEFT of the chevron to mark them for hiding
+//  - Divider sits immediately left of chevron; expanding it pushes left-side items off-screen
+//  - Position validation before collapse prevents "all icons disappearing" bug
 
 import AppKit
 
@@ -14,57 +19,61 @@ final class ControlItem {
     }
     
     enum Lengths {
+        static let collapsed: CGFloat = 20
         static let expanded: CGFloat = 10_000
     }
+    
+    // MARK: - Properties
     
     private let chevronItem: NSStatusItem
     private let dividerItem: NSStatusItem
     private(set) var state: HidingState = .showItems
     
+    // MARK: - Initialization
+    
     init() {
-        // NSStatusItem preferred position: distance from right edge of menubar (points).
-        // 0 = rightmost, higher = further left. macOS reads these values from UserDefaults
-        // at the moment autosaveName is assigned, so they must be written beforehand.
-        let chevronKey = "NSStatusItem Preferred Position Bartidy_Chevron"
-        let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
-        
-        Self.ensureCorrectPositions(chevronKey: chevronKey, dividerKey: dividerKey)
+        Self.migrateFromBrokenPositions()
         
         chevronItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        dividerItem = NSStatusBar.system.statusItem(withLength: 0)
+        dividerItem = NSStatusBar.system.statusItem(withLength: Lengths.collapsed)
         
         chevronItem.autosaveName = "Bartidy_Chevron"
         dividerItem.autosaveName = "Bartidy_Divider"
         
         setupButton()
+        setupDivider()
         updateAppearance()
     }
     
-    private static func ensureCorrectPositions(chevronKey: String, dividerKey: String) {
+    // MARK: - Migration
+    
+    /// Clear position data corrupted by v5/v6 migrations that forced positions to 0/1.
+    /// After clearing, macOS assigns natural positions via autosaveName.
+    private static func migrateFromBrokenPositions() {
         let defaults = UserDefaults.standard
-        let migrationKey = "Bartidy_PositionMigration_v3"
+        let migrationKey = "Bartidy_PositionMigration_v7"
         
-        if !defaults.bool(forKey: migrationKey) {
-            defaults.removeObject(forKey: chevronKey)
-            defaults.removeObject(forKey: dividerKey)
-            defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Chevron")
-            defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Divider")
-            defaults.set(true, forKey: migrationKey)
-        }
+        guard !defaults.bool(forKey: migrationKey) else { return }
         
-        let chevronPos = defaults.object(forKey: chevronKey) as? CGFloat
-        let dividerPos = defaults.object(forKey: dividerKey) as? CGFloat
-        
-        switch (chevronPos, dividerPos) {
-        case let (cp?, dp?) where dp > cp:
-            break
-        case let (cp?, _):
-            defaults.set(cp + 1, forKey: dividerKey)
-        default:
-            defaults.set(CGFloat(0), forKey: chevronKey)
-            defaults.set(CGFloat(1), forKey: dividerKey)
-        }
+        defaults.removeObject(forKey: "NSStatusItem Preferred Position Bartidy_Chevron")
+        defaults.removeObject(forKey: "NSStatusItem Preferred Position Bartidy_Divider")
+        defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Chevron")
+        defaults.removeObject(forKey: "NSStatusItem Visible Bartidy_Divider")
+        defaults.set(true, forKey: migrationKey)
     }
+    
+    // MARK: - Position Validation
+    
+    private var isDividerLeftOfChevron: Bool {
+        guard
+            let chevronX = chevronItem.button?.window?.frame.origin.x,
+            let dividerX = dividerItem.button?.window?.frame.origin.x
+        else { return false }
+        
+        return chevronX > dividerX
+    }
+    
+    // MARK: - Public Methods
     
     func toggle() {
         state = (state == .showItems) ? .hideItems : .showItems
@@ -83,11 +92,19 @@ final class ControlItem {
         updateAppearance()
     }
     
+    // MARK: - Private Methods
+    
     private func setupButton() {
         guard let button = chevronItem.button else { return }
         button.target = self
         button.action = #selector(performAction)
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+    }
+    
+    private func setupDivider() {
+        guard let button = dividerItem.button else { return }
+        button.title = "│"
+        button.appearsDisabled = true
     }
     
     @objc private func performAction() {
@@ -119,19 +136,37 @@ final class ControlItem {
     }
     
     private func updateAppearance() {
-        guard let button = chevronItem.button else { return }
+        guard let chevronButton = chevronItem.button else { return }
         
         switch state {
         case .hideItems:
+            guard isDividerLeftOfChevron else {
+                state = .showItems
+                return
+            }
+            
             dividerItem.length = Lengths.expanded
-            button.image = NSImage(
+            
+            if let dividerButton = dividerItem.button {
+                dividerButton.image = nil
+                dividerButton.cell?.isEnabled = false
+                dividerButton.isHighlighted = false
+            }
+            
+            chevronButton.image = NSImage(
                 systemSymbolName: "chevron.down",
                 accessibilityDescription: "Show menu bar icons"
             )
             
         case .showItems:
-            dividerItem.length = 0
-            button.image = NSImage(
+            dividerItem.length = Lengths.collapsed
+            
+            if let dividerButton = dividerItem.button {
+                dividerButton.cell?.isEnabled = true
+                dividerButton.title = "│"
+            }
+            
+            chevronButton.image = NSImage(
                 systemSymbolName: "chevron.left",
                 accessibilityDescription: "Hide menu bar icons"
             )

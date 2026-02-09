@@ -18,7 +18,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     
     private static func isAlreadyRunning() -> Bool {
         guard let bundleID = Bundle.main.bundleIdentifier else { return false }
-        let running = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
-        return running.count > 1
+        return NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).count > 1
     }
 }
