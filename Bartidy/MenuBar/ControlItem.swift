@@ -25,20 +25,29 @@ final class ControlItem {
         chevronItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         dividerItem = NSStatusBar.system.statusItem(withLength: 0)
         
-        // macOS position: LOWER value = MORE to the RIGHT
-        // Divider expands LEFT, so Chevron must be RIGHT of Divider (lower position)
+        // autosaveName must be set before position corrections — macOS restores
+        // saved positions on assignment, so later corrections would be overwritten.
+        chevronItem.autosaveName = "Bartidy_Chevron"
+        dividerItem.autosaveName = "Bartidy_Divider"
+        
+        // NSStatusItem position: higher value = further left in menubar.
+        // Divider must be left of chevron (higher value) to push icons off-screen when expanded.
         let chevronKey = "NSStatusItem Preferred Position Bartidy_Chevron"
         let dividerKey = "NSStatusItem Preferred Position Bartidy_Divider"
         
-        let chevronPos = UserDefaults.standard.object(forKey: chevronKey) as? Int ?? 0
-        let dividerPos = UserDefaults.standard.object(forKey: dividerKey) as? Int ?? 1
+        let chevronPos = UserDefaults.standard.object(forKey: chevronKey) as? Int
+        let dividerPos = UserDefaults.standard.object(forKey: dividerKey) as? Int
         
-        if dividerPos <= chevronPos {
-            UserDefaults.standard.set(chevronPos + 1, forKey: dividerKey)
+        if let cp = chevronPos, let dp = dividerPos {
+            if dp <= cp {
+                UserDefaults.standard.set(cp + 1, forKey: dividerKey)
+            }
+        } else {
+            if chevronPos == nil {
+                UserDefaults.standard.set(0, forKey: chevronKey)
+            }
+            UserDefaults.standard.set((chevronPos ?? 0) + 1, forKey: dividerKey)
         }
-        
-        dividerItem.autosaveName = "Bartidy_Divider"
-        chevronItem.autosaveName = "Bartidy_Chevron"
         
         setupButton()
         updateAppearance()
