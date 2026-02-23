@@ -1,3 +1,7 @@
+# etc
+firebase-debug.log
+.omc/
+
 # Xcode
 *.xcuserstate
 *.xcuserdatad/
