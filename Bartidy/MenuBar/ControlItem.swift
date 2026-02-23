@@ -9,6 +9,7 @@
 //  - Position validation before collapse prevents "all icons disappearing" bug
 
 import AppKit
+import SwiftUI
 
 @MainActor
 final class ControlItem {
@@ -122,15 +123,42 @@ final class ControlItem {
     
     private func showMenu() {
         let menu = NSMenu()
+
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+
+        menu.addItem(.separator())
+
         let quitItem = NSMenuItem(title: "Quit Bartidy", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
-        
+
         if let button = chevronItem.button {
             menu.popUp(positioning: nil, at: NSPoint(x: 0, y: button.bounds.height + 5), in: button)
         }
     }
     
+    @objc private func openSettings() {
+        if let existing = NSApp.windows.first(where: { $0.title == "Bartidy Settings" }) {
+            existing.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "Bartidy Settings"
+        window.center()
+        window.contentView = NSHostingView(rootView: SettingsView())
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
     @objc private func quitApp() {
         NSApplication.shared.terminate(nil)
     }

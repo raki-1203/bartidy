@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: - Properties
-    
-    @AppStorage("launchAtLogin") private var launchAtLogin = false
+
+    @State private var launchAtLogin = LaunchAtLoginService.shared.isEnabled
     @AppStorage("showInDock") private var showInDock = false
-    
+
     // MARK: - Body
     
     var body: some View {
@@ -33,6 +33,9 @@ struct SettingsView: View {
                 }
         }
         .frame(width: 450, height: 300)
+        .onAppear {
+            launchAtLogin = LaunchAtLoginService.shared.isEnabled
+        }
     }
     
     // MARK: - Tabs
@@ -41,6 +44,12 @@ struct SettingsView: View {
         Form {
             Section {
                 Toggle("Launch at login", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { newValue in
+                        let success = LaunchAtLoginService.shared.setEnabled(newValue)
+                        if !success {
+                            launchAtLogin = !newValue
+                        }
+                    }
                 Toggle("Show in Dock", isOn: $showInDock)
             }
             
@@ -87,7 +96,7 @@ struct SettingsView: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            Text("Version 1.0.0")
+            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
@@ -97,7 +106,7 @@ struct SettingsView: View {
             
             Spacer()
             
-            Link("GitHub Repository", destination: URL(string: "https://github.com")!)
+            Link("GitHub Repository", destination: URL(string: "https://github.com/raki-1203/bartidy")!)
                 .font(.caption)
         }
         .padding(40)
