@@ -23,6 +23,16 @@ final class ControlItem {
         static let collapsed: CGFloat = 20
         static let expanded: CGFloat = 10_000
     }
+
+    private static let chevronShowImage: NSImage? = NSImage(
+        systemSymbolName: "chevron.down",
+        accessibilityDescription: "Show menu bar icons"
+    )
+
+    private static let chevronHideImage: NSImage? = NSImage(
+        systemSymbolName: "chevron.left",
+        accessibilityDescription: "Hide menu bar icons"
+    )
     
     // MARK: - Properties
     
@@ -181,23 +191,17 @@ final class ControlItem {
                 dividerButton.isHighlighted = false
             }
             
-            chevronButton.image = NSImage(
-                systemSymbolName: "chevron.down",
-                accessibilityDescription: "Show menu bar icons"
-            )
-            
+            chevronButton.image = Self.chevronShowImage
+
         case .showItems:
             dividerItem.length = Lengths.collapsed
-            
+
             if let dividerButton = dividerItem.button {
                 dividerButton.cell?.isEnabled = true
                 dividerButton.title = "│"
             }
-            
-            chevronButton.image = NSImage(
-                systemSymbolName: "chevron.left",
-                accessibilityDescription: "Hide menu bar icons"
-            )
+
+            chevronButton.image = Self.chevronHideImage
         }
     }
 }
