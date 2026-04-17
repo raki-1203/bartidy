@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Bartidy Updates</title>
+        <link>https://raw.githubusercontent.com/raki-1203/bartidy/main/appcast.xml</link>
+        <description>Most recent Bartidy releases</description>
+        <language>en</language>
+        <item>
+            <title>Version 1.4.0</title>
+            <pubDate>금, 17  4월 2026 08:24:28 +0000</pubDate>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://github.com/raki-1203/bartidy/releases/tag/v1.4.0</sparkle:releaseNotesLink>
+            <enclosure
+                url="https://github.com/raki-1203/bartidy/releases/download/v1.4.0/Bartidy-1.4.0.dmg"
+                sparkle:edSignature="zmPmamhrLMb2D4NDg4tXZczwnX01HWdB1bej1mtJuevyakUUupAKFKIUQExuRMIxyvcs/VZ9SWdM6/CskFopBg=="
+                length="1341892"
+                type="application/octet-stream" />
+        </item>
+    </channel>
+</rss>
