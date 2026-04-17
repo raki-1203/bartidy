@@ -1,9 +1,13 @@
 name: Release
 
+# Auto-trigger on tag push is disabled while releases are produced
+# manually via scripts/release.sh (Developer ID signing + Apple
+# notarization + Sparkle EdDSA signing). The CI build below only
+# does ad-hoc signing, which would overwrite the notarized DMG and
+# break Sparkle auto-update verification. Re-enable once the workflow
+# is rewritten to mirror scripts/release.sh.
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
