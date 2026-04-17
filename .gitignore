@@ -1,6 +1,7 @@
 # etc
 firebase-debug.log
 .omc/
+.sparkle/
 
 # Xcode
 *.xcuserstate

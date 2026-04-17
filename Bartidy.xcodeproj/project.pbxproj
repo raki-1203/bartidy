@@ -7,46 +7,55 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */; };
+		300D53422F921E69005ED88E /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 300D53412F921E69005ED88E /* Sparkle */; };
+		9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818DBEC83AF4E249285BBBB /* MenuBarService.swift */; };
 		A1000001253D000100000001 /* BartidyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002253D000100000001 /* BartidyApp.swift */; };
 		A1000003253D000100000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004253D000100000002 /* AppDelegate.swift */; };
 		A1000005253D000100000003 /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006253D000100000003 /* MenuBarPopoverView.swift */; };
 		A1000007253D000100000004 /* MenuBarIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008253D000100000004 /* MenuBarIconRow.swift */; };
 		A1000009253D000100000005 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A253D000100000005 /* SettingsView.swift */; };
-	A100000B253D000100000006 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C253D000100000006 /* MenuBarIcon.swift */; };
-	9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818DBEC83AF4E249285BBBB /* MenuBarService.swift */; };
-	E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35DDE2600DE48039930BBBB /* SettingsStore.swift */; };
-	F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */; };
-	A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E253D000100000007 /* MenuBarViewModel.swift */; };
-	C1000002253D000100000001 /* ControlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001253D000100000001 /* ControlItem.swift */; };
-	C1000003253D000100000002 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004253D000100000002 /* MenuBarManager.swift */; };
+		A100000B253D000100000006 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C253D000100000006 /* MenuBarIcon.swift */; };
+		A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E253D000100000007 /* MenuBarViewModel.swift */; };
 		A100000F253D000100000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000010253D000100000008 /* Assets.xcassets */; };
+		C1000002253D000100000001 /* ControlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001253D000100000001 /* ControlItem.swift */; };
+		C1000003253D000100000002 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004253D000100000002 /* MenuBarManager.swift */; };
+		E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35DDE2600DE48039930BBBB /* SettingsStore.swift */; };
+		F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */; };
+		T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9818DBEC83AF4E249285BBBB /* MenuBarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarService.swift; sourceTree = "<group>"; };
 		A1000000253D000000000000 /* Bartidy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bartidy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000002253D000100000001 /* BartidyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BartidyApp.swift; sourceTree = "<group>"; };
 		A1000004253D000100000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1000006253D000100000003 /* MenuBarPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPopoverView.swift; sourceTree = "<group>"; };
 		A1000008253D000100000004 /* MenuBarIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconRow.swift; sourceTree = "<group>"; };
 		A100000A253D000100000005 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-	A100000C253D000100000006 /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
-	9818DBEC83AF4E249285BBBB /* MenuBarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarService.swift; sourceTree = "<group>"; };
-	E35DDE2600DE48039930BBBB /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
-	F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
-	T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginServiceTests.swift; sourceTree = "<group>"; };
-	T1000003253D000100000001 /* BartidyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartidyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-	A100000E253D000100000007 /* MenuBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewModel.swift; sourceTree = "<group>"; };
-	A1000010253D000100000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-	A1000011253D000100000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-	B1000001253D000100000001 /* Bartidy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bartidy-Bridging-Header.h"; sourceTree = "<group>"; };
-	B1000002253D000100000002 /* CGSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
-	C1000001253D000100000001 /* ControlItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlItem.swift; sourceTree = "<group>"; };
-	C1000004253D000100000002 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		A100000C253D000100000006 /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
+		A100000E253D000100000007 /* MenuBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewModel.swift; sourceTree = "<group>"; };
+		A1000010253D000100000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1000011253D000100000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1000001253D000100000001 /* Bartidy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bartidy-Bridging-Header.h"; sourceTree = "<group>"; };
+		B1000002253D000100000002 /* CGSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
+		C1000001253D000100000001 /* ControlItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlItem.swift; sourceTree = "<group>"; };
+		C1000004253D000100000002 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		E35DDE2600DE48039930BBBB /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
+		T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginServiceTests.swift; sourceTree = "<group>"; };
+		T1000003253D000100000001 /* BartidyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartidyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A10000F0253D000000000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300D53422F921E69005ED88E /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T10000F0253D000000000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -56,40 +65,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		300D53402F921E69005ED88E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A10000E0253D000000000000 = {
 			isa = PBXGroup;
 			children = (
 				A10000E1253D000000000000 /* Bartidy */,
 				T10000E0253D000000000000 /* BartidyTests */,
+				300D53402F921E69005ED88E /* Frameworks */,
 				A10000E2253D000000000000 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-	A10000E1253D000000000000 /* Bartidy */ = {
-		isa = PBXGroup;
-		children = (
-			A10000E3253D000000000000 /* App */,
-			A10000E4253D000000000000 /* Models */,
-			A10000E5253D000000000000 /* Views */,
-			A10000E6253D000000000000 /* ViewModels */,
-			A10000E9253D000000000000 /* Services */,
-			C10000E0253D000000000000 /* MenuBar */,
-			B10000E0253D000000000000 /* Bridging */,
-			A10000E7253D000000000000 /* Resources */,
-			A1000011253D000100000009 /* Info.plist */,
-		);
-		path = Bartidy;
-		sourceTree = "<group>";
-	};
-	B10000E0253D000000000000 /* Bridging */ = {
-		isa = PBXGroup;
-		children = (
-			B1000001253D000100000001 /* Bartidy-Bridging-Header.h */,
-			B1000002253D000100000002 /* CGSPrivate.h */,
-		);
-		path = Bridging;
-		sourceTree = "<group>";
-	};
+		A10000E1253D000000000000 /* Bartidy */ = {
+			isa = PBXGroup;
+			children = (
+				A10000E3253D000000000000 /* App */,
+				A10000E4253D000000000000 /* Models */,
+				A10000E5253D000000000000 /* Views */,
+				A10000E6253D000000000000 /* ViewModels */,
+				A10000E9253D000000000000 /* Services */,
+				C10000E0253D000000000000 /* MenuBar */,
+				B10000E0253D000000000000 /* Bridging */,
+				A10000E7253D000000000000 /* Resources */,
+				A1000011253D000100000009 /* Info.plist */,
+			);
+			path = Bartidy;
+			sourceTree = "<group>";
+		};
 		A10000E2253D000000000000 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,14 +105,6 @@
 				T1000003253D000100000001 /* BartidyTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		T10000E0253D000000000000 /* BartidyTests */ = {
-			isa = PBXGroup;
-			children = (
-				T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */,
-			);
-			path = BartidyTests;
 			sourceTree = "<group>";
 		};
 		A10000E3253D000000000000 /* App */ = {
@@ -150,33 +150,50 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-	A10000E8253D000000000000 /* Components */ = {
-		isa = PBXGroup;
-		children = (
-			A1000008253D000100000004 /* MenuBarIconRow.swift */,
-		);
-		path = Components;
-		sourceTree = "<group>";
-	};
-	A10000E9253D000000000000 /* Services */ = {
-		isa = PBXGroup;
-		children = (
-			9818DBEC83AF4E249285BBBB /* MenuBarService.swift */,
-			E35DDE2600DE48039930BBBB /* SettingsStore.swift */,
-			F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */,
-		);
-		path = Services;
-		sourceTree = "<group>";
-	};
-	C10000E0253D000000000000 /* MenuBar */ = {
-		isa = PBXGroup;
-		children = (
-			C1000001253D000100000001 /* ControlItem.swift */,
-			C1000004253D000100000002 /* MenuBarManager.swift */,
-		);
-		path = MenuBar;
-		sourceTree = "<group>";
-	};
+		A10000E8253D000000000000 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A1000008253D000100000004 /* MenuBarIconRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A10000E9253D000000000000 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9818DBEC83AF4E249285BBBB /* MenuBarService.swift */,
+				E35DDE2600DE48039930BBBB /* SettingsStore.swift */,
+				F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B10000E0253D000000000000 /* Bridging */ = {
+			isa = PBXGroup;
+			children = (
+				B1000001253D000100000001 /* Bartidy-Bridging-Header.h */,
+				B1000002253D000100000002 /* CGSPrivate.h */,
+			);
+			path = Bridging;
+			sourceTree = "<group>";
+		};
+		C10000E0253D000000000000 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				C1000001253D000100000001 /* ControlItem.swift */,
+				C1000004253D000100000002 /* MenuBarManager.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		T10000E0253D000000000000 /* BartidyTests */ = {
+			isa = PBXGroup;
+			children = (
+				T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */,
+			);
+			path = BartidyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,8 +218,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = T1000100253D000000000000 /* Build configuration list for PBXNativeTarget "BartidyTests" */;
 			buildPhases = (
-				T10000F1253D000000000000 /* Sources (Tests) */,
-				T10000F0253D000000000000 /* Frameworks (Tests) */,
+				T10000F1253D000000000000 /* Sources */,
+				T10000F0253D000000000000 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -214,24 +231,6 @@
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
-
-/* Begin PBXContainerItemProxy section */
-		T10000C0253D000000000000 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A10000FE253D000000000000 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A10000FF253D000000000000;
-			remoteInfo = Bartidy;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXTargetDependency section */
-		T10000D0253D000000000000 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A10000FF253D000000000000 /* Bartidy */;
-			targetProxy = T10000C0253D000000000000 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXProject section */
 		A10000FE253D000000000000 /* Project object */ = {
@@ -259,6 +258,9 @@
 				Base,
 			);
 			mainGroup = A10000E0253D000000000000;
+			packageReferences = (
+				300D533F2F921D1F005ED88E /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = A10000E2253D000000000000 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -281,44 +283,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-	A10000F1253D000000000000 /* Sources */ = {
-		isa = PBXSourcesBuildPhase;
-		buildActionMask = 2147483647;
-		files = (
-			A1000001253D000100000001 /* BartidyApp.swift in Sources */,
-			A1000003253D000100000002 /* AppDelegate.swift in Sources */,
-			A1000005253D000100000003 /* MenuBarPopoverView.swift in Sources */,
-			A1000007253D000100000004 /* MenuBarIconRow.swift in Sources */,
-			A1000009253D000100000005 /* SettingsView.swift in Sources */,
-			A100000B253D000100000006 /* MenuBarIcon.swift in Sources */,
-		9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */,
-		E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */,
-		F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */,
-		A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */,
-			C1000002253D000100000001 /* ControlItem.swift in Sources */,
-			C1000003253D000100000002 /* MenuBarManager.swift in Sources */,
-		);
-		runOnlyForDeploymentPostprocessing = 0;
-	};
+		A10000F1253D000000000000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001253D000100000001 /* BartidyApp.swift in Sources */,
+				A1000003253D000100000002 /* AppDelegate.swift in Sources */,
+				A1000005253D000100000003 /* MenuBarPopoverView.swift in Sources */,
+				A1000007253D000100000004 /* MenuBarIconRow.swift in Sources */,
+				A1000009253D000100000005 /* SettingsView.swift in Sources */,
+				A100000B253D000100000006 /* MenuBarIcon.swift in Sources */,
+				9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */,
+				E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */,
+				F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */,
+				A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */,
+				C1000002253D000100000001 /* ControlItem.swift in Sources */,
+				C1000003253D000100000002 /* MenuBarManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		T10000F1253D000000000000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTestsBuildPhase section */
-	T10000F1253D000000000000 /* Sources (Tests) */ = {
-		isa = PBXSourcesBuildPhase;
-		buildActionMask = 2147483647;
-		files = (
-			T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */,
-		);
-		runOnlyForDeploymentPostprocessing = 0;
-	};
-	T10000F0253D000000000000 /* Frameworks (Tests) */ = {
-		isa = PBXFrameworksBuildPhase;
-		buildActionMask = 2147483647;
-		files = (
-		);
-		runOnlyForDeploymentPostprocessing = 0;
-	};
-/* End PBXTestsBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		A1000102253D000000000000 /* Debug */ = {
@@ -446,7 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4Z683Z85XA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Bartidy/Info.plist;
@@ -474,7 +466,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4Z683Z85XA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Bartidy/Info.plist;
@@ -493,7 +485,7 @@
 			};
 			name = Release;
 		};
-		T1000104253D000000000000 /* Debug (Tests) */ = {
+		T1000104253D000000000000 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -508,7 +500,7 @@
 			};
 			name = Debug;
 		};
-		T1000105253D000000000000 /* Release (Tests) */ = {
+		T1000105253D000000000000 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -547,13 +539,32 @@
 		T1000100253D000000000000 /* Build configuration list for PBXNativeTarget "BartidyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				T1000104253D000000000000 /* Debug (Tests) */,
-				T1000105253D000000000000 /* Release (Tests) */,
+				T1000104253D000000000000 /* Debug */,
+				T1000105253D000000000000 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		300D533F2F921D1F005ED88E /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		300D53412F921E69005ED88E /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 300D533F2F921D1F005ED88E /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A10000FE253D000000000000 /* Project object */;
 }

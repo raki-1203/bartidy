@@ -9,6 +9,7 @@
 //  - Position validation before collapse prevents "all icons disappearing" bug
 
 import AppKit
+import Sparkle
 import SwiftUI
 
 @MainActor
@@ -137,6 +138,14 @@ final class ControlItem {
         let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
+
+        let updateItem = NSMenuItem(
+            title: "Check for Updates...",
+            action: #selector(SPUStandardUpdaterController.checkForUpdates(_:)),
+            keyEquivalent: ""
+        )
+        updateItem.target = (NSApp.delegate as? AppDelegate)?.updaterController
+        menu.addItem(updateItem)
 
         menu.addItem(.separator())
 
