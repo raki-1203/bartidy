@@ -3,6 +3,12 @@ firebase-debug.log
 .omc/
 .sparkle/
 
+# Secrets / credentials (never commit)
+*.p12
+*.cer
+*.key
+*.pem
+
 # Xcode
 *.xcuserstate
 *.xcuserdatad/

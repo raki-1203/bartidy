@@ -1,67 +1,135 @@
 name: Release
 
-# Auto-trigger on tag push is disabled while releases are produced
-# manually via scripts/release.sh (Developer ID signing + Apple
-# notarization + Sparkle EdDSA signing). The CI build below only
-# does ad-hoc signing, which would overwrite the notarized DMG and
-# break Sparkle auto-update verification. Re-enable once the workflow
-# is rewritten to mirror scripts/release.sh.
+# Triggered by:
+#   - pushing a `v*` tag (production release)
+#   - manual workflow_dispatch (for re-runs and testing)
+#
+# Produces a Developer ID-signed, Apple-notarized DMG and updates
+# appcast.xml + Casks/bartidy.rb on main. Mirrors scripts/release.sh.
+
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g. 1.4.1)'
+        required: true
 
 jobs:
-  build:
+  release:
     runs-on: macos-latest
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Build Release
-        run: |
-          xcodebuild -scheme Bartidy \
-            -configuration Release \
-            -derivedDataPath build \
-            build
-
-      - name: Create DMG
-        id: dmg
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          APP_PATH="build/Build/Products/Release/Bartidy.app"
-          DMG_NAME="Bartidy-${VERSION}.dmg"
-          
-          hdiutil create -volname "Bartidy" \
-            -srcfolder "$APP_PATH" \
-            -ov -format UDZO \
-            "$DMG_NAME"
-          
-          SHA256=$(shasum -a 256 "$DMG_NAME" | awk '{print $1}')
-          
-          echo "dmg_name=$DMG_NAME" >> $GITHUB_OUTPUT
-          echo "sha256=$SHA256" >> $GITHUB_OUTPUT
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.dmg.outputs.dmg_name }}
-          generate_release_notes: true
+          ref: main
+          fetch-depth: 0
 
-      - name: Update Cask Formula
+      - name: Determine version
+        id: version
         run: |
-          VERSION=${{ steps.dmg.outputs.version }}
-          SHA256=${{ steps.dmg.outputs.sha256 }}
-          
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git checkout main
-          
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Version: $VERSION"
+
+      - name: Setup signing keychain
+        env:
+          CERT_P12_BASE64: ${{ secrets.DEVELOPER_ID_CERT_P12_BASE64 }}
+          CERT_PASSWORD: ${{ secrets.DEVELOPER_ID_CERT_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          set -e
+          KEYCHAIN_PASSWORD=$(uuidgen)
+          KEYCHAIN="$RUNNER_TEMP/build.keychain-db"
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+
+          # Add to keychain search list so codesign can find the identity
+          ORIGINAL=$(security list-keychains -d user | sed -e 's/^[[:space:]]*//' | tr -d '"')
+          security list-keychains -d user -s "$KEYCHAIN" $ORIGINAL
+
+          # Import Developer ID Application certificate
+          echo "$CERT_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" \
+              -P "$CERT_PASSWORD" \
+              -A -t cert -f pkcs12 \
+              -k "$KEYCHAIN"
+          security set-key-partition-list \
+              -S apple-tool:,apple:,codesign: \
+              -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          rm "$RUNNER_TEMP/cert.p12"
+
+          # Store notarytool credentials in the same keychain
+          xcrun notarytool store-credentials "bartidy-notary" \
+              --apple-id "$APPLE_ID" \
+              --team-id "$APPLE_TEAM_ID" \
+              --password "$APPLE_APP_PASSWORD" \
+              --keychain "$KEYCHAIN"
+
+          security find-identity -v -p codesigning "$KEYCHAIN"
+
+      - name: Setup Sparkle tools and EdDSA private key
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          set -e
+          mkdir -p .sparkle
+          curl -sL https://github.com/sparkle-project/Sparkle/releases/download/2.9.1/Sparkle-2.9.1.tar.xz \
+              | tar -xJ -C .sparkle
+          # Import EdDSA private key into login keychain so sign_update can find it
+          printf '%s' "$SPARKLE_ED_PRIVATE_KEY" > "$RUNNER_TEMP/eddsa.key"
+          .sparkle/bin/generate_keys -f "$RUNNER_TEMP/eddsa.key"
+          rm "$RUNNER_TEMP/eddsa.key"
+
+      - name: Run release pipeline
+        run: ./scripts/release.sh "${{ steps.version.outputs.version }}"
+
+      - name: Update Cask formula
+        run: |
+          set -e
+          VERSION="${{ steps.version.outputs.version }}"
+          SHA256=$(shasum -a 256 "release/Bartidy-${VERSION}.dmg" | awk '{print $1}')
           sed -i '' "s/version \".*\"/version \"${VERSION}\"/" Casks/bartidy.rb
           sed -i '' "s/sha256 \".*\"/sha256 \"${SHA256}\"/" Casks/bartidy.rb
-          
-          git add Casks/bartidy.rb
-          git commit -m "chore: update cask to v${VERSION}"
-          git push origin main
+
+      - name: Commit appcast + cask back to main
+        run: |
+          set -e
+          VERSION="${{ steps.version.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet appcast.xml Casks/bartidy.rb; then
+            echo "No changes to commit"
+          else
+            git add appcast.xml Casks/bartidy.rb
+            git commit -m "release: v${VERSION} (auto)"
+            git push origin main
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          VERSION="${{ steps.version.outputs.version }}"
+          # If release already exists (e.g. tag pre-created), upload the DMG to it.
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            gh release upload "v${VERSION}" "release/Bartidy-${VERSION}.dmg" --clobber
+          else
+            gh release create "v${VERSION}" \
+                "release/Bartidy-${VERSION}.dmg" \
+                --title "v${VERSION}" \
+                --generate-notes
+          fi
