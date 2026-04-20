@@ -39,6 +39,8 @@ final class ControlItem {
     private let chevronItem: NSStatusItem
     private let dividerItem: NSStatusItem
     private(set) var state: HidingState = .showItems
+    private var settingsWindow: NSWindow?
+    private let settingsWindowDelegate = HideOnCloseWindowDelegate()
     
     // MARK: - Initialization
     
@@ -159,14 +161,29 @@ final class ControlItem {
     
     @objc private func openSettings() {
         NSApp.activate(ignoringOtherApps: true)
-        if #available(macOS 14, *) {
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+
+        if let window = settingsWindow {
+            window.makeKeyAndOrderFront(nil)
+            return
         }
+
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "Bartidy Settings"
+        window.center()
+        window.contentView = NSHostingView(rootView: SettingsView())
+        window.isReleasedWhenClosed = false
+        window.delegate = settingsWindowDelegate
+        window.makeKeyAndOrderFront(nil)
+        settingsWindow = window
     }
 
     @objc private func checkForUpdates() {
+        NSApp.activate(ignoringOtherApps: true)
         (NSApp.delegate as? AppDelegate)?.updaterController.checkForUpdates(nil)
     }
 
@@ -204,5 +221,15 @@ final class ControlItem {
 
             chevronButton.image = Self.chevronHideImage
         }
+    }
+}
+
+/// Hide the window on close instead of releasing it. SwiftUI's App
+/// lifecycle treats a closed last-window as a termination signal even
+/// when applicationShouldTerminateAfterLastWindowClosed returns false.
+final class HideOnCloseWindowDelegate: NSObject, NSWindowDelegate {
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        sender.orderOut(nil)
+        return false
     }
 }
