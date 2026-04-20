@@ -158,23 +158,12 @@ final class ControlItem {
     }
     
     @objc private func openSettings() {
-        if let existing = NSApp.windows.first(where: { $0.title == "Bartidy Settings" }) {
-            existing.makeKeyAndOrderFront(nil)
-            NSApp.activate(ignoringOtherApps: true)
-            return
-        }
-
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 450, height: 300),
-            styleMask: [.titled, .closable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = "Bartidy Settings"
-        window.center()
-        window.contentView = NSHostingView(rootView: SettingsView())
-        window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        if #available(macOS 14, *) {
+            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        } else {
+            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        }
     }
 
     @objc private func checkForUpdates() {
