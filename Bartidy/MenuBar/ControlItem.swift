@@ -184,7 +184,11 @@ final class ControlItem {
 
     @objc private func checkForUpdates() {
         NSApp.activate(ignoringOtherApps: true)
-        (NSApp.delegate as? AppDelegate)?.updaterController.checkForUpdates(nil)
+        guard let delegate = AppDelegate.shared else {
+            NSLog("[Bartidy] AppDelegate.shared is nil; NSApp.delegate=\(String(describing: NSApp.delegate))")
+            return
+        }
+        delegate.updaterController.checkForUpdates(nil)
     }
 
     @objc private func quitApp() {

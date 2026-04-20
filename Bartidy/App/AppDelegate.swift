@@ -8,11 +8,18 @@ import Sparkle
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
+    static private(set) var shared: AppDelegate?
+
     let updaterController = SPUStandardUpdaterController(
         startingUpdater: true,
         updaterDelegate: nil,
         userDriverDelegate: nil
     )
+
+    override init() {
+        super.init()
+        AppDelegate.shared = self
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard !Self.isAlreadyRunning() else {
