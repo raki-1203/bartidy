@@ -88,12 +88,14 @@ jobs:
           mkdir -p .sparkle
           curl -sL https://github.com/sparkle-project/Sparkle/releases/download/2.9.1/Sparkle-2.9.1.tar.xz \
               | tar -xJ -C .sparkle
-          # Import EdDSA private key into login keychain so sign_update can find it
+          # Write key to file; release.sh reads it via SPARKLE_PRIVATE_KEY_FILE
+          # to avoid keychain prompts on CI runners.
           printf '%s' "$SPARKLE_ED_PRIVATE_KEY" > "$RUNNER_TEMP/eddsa.key"
-          .sparkle/bin/generate_keys -f "$RUNNER_TEMP/eddsa.key"
-          rm "$RUNNER_TEMP/eddsa.key"
+          chmod 600 "$RUNNER_TEMP/eddsa.key"
 
       - name: Run release pipeline
+        env:
+          SPARKLE_PRIVATE_KEY_FILE: ${{ runner.temp }}/eddsa.key
         run: ./scripts/release.sh "${{ steps.version.outputs.version }}"
 
       - name: Update Cask formula

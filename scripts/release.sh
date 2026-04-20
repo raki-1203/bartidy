@@ -129,8 +129,14 @@ xcrun stapler staple "$DMG_PATH"
 xcrun stapler validate "$DMG_PATH"
 
 # 5. EdDSA sign for Sparkle
+# In CI, pass the private key file directly via SPARKLE_PRIVATE_KEY_FILE
+# to avoid keychain access prompts. Locally, the key is read from keychain.
 step "EdDSA sign DMG for Sparkle"
-SIGN_OUTPUT=$("$SIGN_UPDATE" "$DMG_PATH")
+if [[ -n "${SPARKLE_PRIVATE_KEY_FILE:-}" ]]; then
+    SIGN_OUTPUT=$("$SIGN_UPDATE" -f "$SPARKLE_PRIVATE_KEY_FILE" "$DMG_PATH")
+else
+    SIGN_OUTPUT=$("$SIGN_UPDATE" "$DMG_PATH")
+fi
 echo "$SIGN_OUTPUT"
 ED_SIG=$(echo "$SIGN_OUTPUT" | grep -oE 'sparkle:edSignature="[^"]+"' | sed 's/sparkle:edSignature="\(.*\)"/\1/')
 ED_LEN=$(echo "$SIGN_OUTPUT" | grep -oE 'length="[0-9]+"' | sed 's/length="\([0-9]*\)"/\1/')
