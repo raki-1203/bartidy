@@ -6,6 +6,19 @@
         <description>Most recent Bartidy releases</description>
         <language>en</language>
         <item>
+            <title>Version 1.4.8</title>
+            <pubDate>Tue, 21 Apr 2026 00:51:57 +0000</pubDate>
+            <sparkle:version>10408</sparkle:version>
+            <sparkle:shortVersionString>1.4.8</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://github.com/raki-1203/bartidy/releases/tag/v1.4.8</sparkle:releaseNotesLink>
+            <enclosure
+                url="https://github.com/raki-1203/bartidy/releases/download/v1.4.8/Bartidy-1.4.8.dmg"
+                sparkle:edSignature="RHjK4KNMKpHEg5X3WA0uh2CiDikZp14qfm9OjwojN9FV/KVqwf5xH6cl+YWHElmLVijpskRN28e/TYO6G/edDQ=="
+                length="1182953"
+                type="application/octet-stream" />
+        </item>
+        <item>
             <title>Version 1.4.7</title>
             <pubDate>Tue, 21 Apr 2026 00:41:21 +0000</pubDate>
             <sparkle:version>7</sparkle:version>
