@@ -30,7 +30,5 @@
     <string>https://raw.githubusercontent.com/raki-1203/bartidy/main/appcast.xml</string>
     <key>SUPublicEDKey</key>
     <string>+29iB7bioQbr3JsNfu+ARx2HlOFnlBZqqacRM9ashh4=</string>
-    <key>SUEnableInstallerLauncherService</key>
-    <true/>
 </dict>
 </plist>
