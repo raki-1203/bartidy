@@ -30,10 +30,12 @@ fi
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-# Auto-increment build number if not given (current + 1)
+# Derive build number from version (e.g. 1.4.8 -> 10408) so every
+# release gets a unique, monotonically increasing CFBundleVersion
+# without needing to persist state across CI runs.
 if [[ -z "$BUILD_NUMBER" ]]; then
-    CURRENT_BUILD=$(grep -m1 "CURRENT_PROJECT_VERSION = [0-9]" Bartidy.xcodeproj/project.pbxproj | grep -oE "[0-9]+")
-    BUILD_NUMBER=$((CURRENT_BUILD + 1))
+    IFS='.' read -ra V <<< "$VERSION"
+    BUILD_NUMBER=$(( ${V[0]:-0} * 10000 + ${V[1]:-0} * 100 + ${V[2]:-0} ))
 fi
 
 TEAM_ID="4Z683Z85XA"

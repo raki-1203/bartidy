@@ -30,5 +30,11 @@
     <string>https://raw.githubusercontent.com/raki-1203/bartidy/main/appcast.xml</string>
     <key>SUPublicEDKey</key>
     <string>+29iB7bioQbr3JsNfu+ARx2HlOFnlBZqqacRM9ashh4=</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUAutomaticallyUpdate</key>
+    <true/>
+    <key>SUScheduledCheckInterval</key>
+    <integer>3600</integer>
 </dict>
 </plist>
