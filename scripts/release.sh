@@ -152,6 +152,55 @@ fi
 step "Update appcast.xml"
 PUB_DATE=$(LC_TIME=en_US.UTF-8 date -u +"%a, %d %b %Y %H:%M:%S +0000")
 
+# Build inline release notes HTML from commit messages since previous tag.
+# Inlining (vs sparkle:releaseNotesLink) avoids Sparkle rendering the entire
+# GitHub repo page chrome inside the update dialog's WebView.
+PREV_TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | grep -v "^v${VERSION}$" | head -n1 || true)
+if [[ -n "$PREV_TAG" ]]; then
+    COMMIT_RANGE="${PREV_TAG}..HEAD"
+else
+    COMMIT_RANGE="HEAD"
+fi
+
+NOTES_HTML=$(VERSION="$VERSION" PREV_TAG="$PREV_TAG" COMMIT_RANGE="$COMMIT_RANGE" python3 <<'PYEOF'
+import html, os, subprocess
+
+version = os.environ["VERSION"]
+prev_tag = os.environ.get("PREV_TAG", "")
+commit_range = os.environ["COMMIT_RANGE"]
+
+result = subprocess.run(
+    ["git", "log", commit_range, "--pretty=format:%s", "--reverse", "--no-merges"],
+    capture_output=True, text=True, check=True,
+)
+lines = [l.strip() for l in result.stdout.splitlines() if l.strip()]
+# Skip auto-generated release commits
+lines = [l for l in lines if not l.startswith("release: v") and not l.startswith("chore: bump version")]
+
+style = (
+    "<style>"
+    "body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;"
+    "color:#1d1d1f;margin:8px 4px;line-height:1.5;}"
+    "h2{font-size:14px;margin:0 0 8px 0;}"
+    "ul{margin:0;padding-left:20px;}"
+    "li{margin:2px 0;}"
+    "code{background:#f5f5f7;padding:1px 4px;border-radius:3px;font-size:12px;}"
+    "</style>"
+)
+
+if lines:
+    items = "".join(f"<li>{html.escape(l)}</li>" for l in lines)
+    body = f"<h2>What's Changed in v{html.escape(version)}</h2><ul>{items}</ul>"
+else:
+    body = f"<h2>Bartidy v{html.escape(version)}</h2><p>See release notes on GitHub.</p>"
+
+print(style + body, end="")
+PYEOF
+)
+
+# Escape for CDATA: split any "]]>" sequences (rare, but safe)
+NOTES_HTML_SAFE=${NOTES_HTML//]]>/]]]]><![CDATA[>}
+
 NEW_ITEM=$(cat <<EOF
         <item>
             <title>Version ${VERSION}</title>
@@ -159,7 +208,7 @@ NEW_ITEM=$(cat <<EOF
             <sparkle:version>${BUILD_NUMBER}</sparkle:version>
             <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://github.com/raki-1203/bartidy/releases/tag/v${VERSION}</sparkle:releaseNotesLink>
+            <description><![CDATA[${NOTES_HTML_SAFE}]]></description>
             <enclosure
                 url="${DOWNLOAD_URL}"
                 sparkle:edSignature="${ED_SIG}"
@@ -184,14 +233,19 @@ ${NEW_ITEM}
 EOF
 else
     # Insert new item at top of <channel>, after <language> tag
-    python3 - <<PYEOF
-import re
-path = "$APPCAST_PATH"
+    APPCAST_PATH="$APPCAST_PATH" NEW_ITEM="$NEW_ITEM" python3 <<'PYEOF'
+import os, re
+path = os.environ["APPCAST_PATH"]
+new_item = os.environ["NEW_ITEM"]
 with open(path) as f:
     content = f.read()
-new_item = '''$NEW_ITEM'''
-# Insert after <language>...</language>
-content = re.sub(r"(</language>\s*\n)", r"\1" + new_item + "\n", content, count=1)
+# Insert after <language>...</language> (use lambda so HTML in new_item
+# isn't reinterpreted as regex backreferences)
+content = re.sub(
+    r"(</language>\s*\n)",
+    lambda m: m.group(1) + new_item + "\n",
+    content, count=1,
+)
 with open(path, "w") as f:
     f.write(content)
 PYEOF
