@@ -41,6 +41,7 @@ final class ControlItem {
     private(set) var state: HidingState = .showItems
     private var settingsWindow: NSWindow?
     private let settingsWindowDelegate = HideOnCloseWindowDelegate()
+    private var hiddenItemsPopover: NSPopover?
     
     // MARK: - Initialization
     
@@ -117,7 +118,49 @@ final class ControlItem {
     private func setupDivider() {
         guard let button = dividerItem.button else { return }
         button.title = "│"
-        button.appearsDisabled = true
+        button.appearsDisabled = true   // 외형만 흐리게, 클릭 동작은 유지됨
+        button.target = self
+        button.action = #selector(dividerClicked)
+    }
+
+    @objc private func dividerClicked() {
+        // 펼친 상태에서만 동작. 접힌 상태에선 아이콘이 화면 밖이라 팝업이 무의미하다.
+        guard state == .showItems else { return }
+
+        guard HiddenItemScanner.shared.isAccessibilityTrusted() else {
+            showAccessibilityAlert()
+            return
+        }
+
+        let items = HiddenItemScanner.shared.scanHiddenItems()
+        showHiddenItemsPopover(items: items)
+    }
+
+    private func showHiddenItemsPopover(items: [HiddenMenuItem]) {
+        guard let button = dividerItem.button else { return }
+
+        let popover = NSPopover()
+        popover.behavior = .transient
+        popover.contentViewController = NSHostingController(
+            rootView: HiddenItemsPopover(items: items) { [weak self] item in
+                self?.hiddenItemsPopover?.performClose(nil)
+                HiddenItemScanner.shared.press(item)
+            }
+        )
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+        hiddenItemsPopover = popover
+    }
+
+    private func showAccessibilityAlert() {
+        NSApp.activate(ignoringOtherApps: true)
+        let alert = NSAlert()
+        alert.messageText = "손쉬운 사용 권한이 필요합니다"
+        alert.informativeText = "노치에 가려진 메뉴바 아이콘에 접근하려면 시스템 설정에서 Bartidy에 손쉬운 사용 권한을 허용해주세요."
+        alert.addButton(withTitle: "권한 요청")
+        alert.addButton(withTitle: "취소")
+        if alert.runModal() == .alertFirstButtonReturn {
+            HiddenItemScanner.shared.requestAccessibility()
+        }
     }
     
     @objc private func performAction() {
