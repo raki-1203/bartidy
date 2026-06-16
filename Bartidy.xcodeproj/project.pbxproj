@@ -17,6 +17,7 @@
 		F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */; };
 		ND000002253D000100000001 /* NotchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = ND000001253D000100000001 /* NotchDetector.swift */; };
 		T3000002253D000100000001 /* HiddenMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = T3000001253D000100000001 /* HiddenMenuItem.swift */; };
+		HP000002253D000100000001 /* HiddenItemsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = HP000001253D000100000001 /* HiddenItemsPopover.swift */; };
 		T3000004253D000100000001 /* HiddenItemScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = T3000003253D000100000001 /* HiddenItemScanner.swift */; };
 		T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */; };
 		ND000004253D000100000001 /* NotchDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ND000003253D000100000001 /* NotchDetectorTests.swift */; };
@@ -37,6 +38,7 @@
 		F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
 		ND000001253D000100000001 /* NotchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchDetector.swift; sourceTree = "<group>"; };
 		T3000001253D000100000001 /* HiddenMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenMenuItem.swift; sourceTree = "<group>"; };
+		HP000001253D000100000001 /* HiddenItemsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenItemsPopover.swift; sourceTree = "<group>"; };
 		T3000003253D000100000001 /* HiddenItemScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenItemScanner.swift; sourceTree = "<group>"; };
 		T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginServiceTests.swift; sourceTree = "<group>"; };
 		ND000003253D000100000001 /* NotchDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchDetectorTests.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				A100000A253D000100000005 /* SettingsView.swift */,
+				HP000001253D000100000001 /* HiddenItemsPopover.swift */,
 				A10000E8253D000000000000 /* Components */,
 			);
 			path = Views;
@@ -308,6 +311,7 @@
 				ND000002253D000100000001 /* NotchDetector.swift in Sources */,
 				T3000002253D000100000001 /* HiddenMenuItem.swift in Sources */,
 				T3000004253D000100000001 /* HiddenItemScanner.swift in Sources */,
+				HP000002253D000100000001 /* HiddenItemsPopover.swift in Sources */,
 				C1000002253D000100000001 /* ControlItem.swift in Sources */,
 				C1000003253D000100000002 /* MenuBarManager.swift in Sources */,
 			);
