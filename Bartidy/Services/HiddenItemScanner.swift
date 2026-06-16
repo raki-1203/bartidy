@@ -29,44 +29,70 @@ final class HiddenItemScanner {
 
     // MARK: - 열거
 
-    /// 노치에 가려진 메뉴바 status item을 수집한다. 권한이 없거나 노치가 없으면 빈 배열.
-    func scanHiddenItems() -> [HiddenMenuItem] {
+    /// 앱별 AX 메시징 응답을 기다리는 최대 시간(초). 응답이 느린 앱이 스캔 전체를 막지 않도록
+    /// 기본 타임아웃(수 초) 대신 짧게 제한한다.
+    private static let messagingTimeout: Float = 0.2
+
+    /// 노치에 가려진 메뉴바 status item을 수집한다. 권한이 없으면 빈 배열.
+    ///
+    /// 메뉴바 아이콘은 UI 앱(`.regular`/`.accessory`)만 만들 수 있으므로 백그라운드 데몬
+    /// (`.prohibited`)은 후보에서 제외한다. 남은 앱은 동시 큐에 한꺼번에 던져(웨이브 없이)
+    /// AX 조회를 겹쳐서 수행한다. AX 조회는 앱마다 IPC 왕복이라 순차로 돌면 느리다.
+    /// **블로킹 호출이므로 백그라운드에서 부른다.**
+    /// - Parameter notchRightEdgeX: 노치 오른쪽 경계(`NSScreen.auxiliaryTopRightArea.minX`).
+    func scanHiddenItems(notchRightEdgeX: CGFloat) -> [HiddenMenuItem] {
         guard isAccessibilityTrusted() else { return [] }
-        guard let screen = NSScreen.main,
-              let notchRightEdgeX = screen.auxiliaryTopRightArea?.minX else {
-            return []
+
+        let apps = NSWorkspace.shared.runningApplications.filter {
+            $0.activationPolicy != .prohibited && $0.localizedName != nil && !shouldSkip($0)
         }
 
-        var result: [HiddenMenuItem] = []
+        // 모든 앱 조회를 동시에 띄워 IPC 대기를 겹친다(코어 수에 묶이는 concurrentPerform과 달리
+        // 느린 앱이 웨이브로 누적되지 않음). 결과는 고유 인덱스에 써서 락으로 보호한다.
+        var perApp = [[HiddenMenuItem]](repeating: [], count: apps.count)
+        let lock = NSLock()
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "com.bartidy.hiddenitemscanner.scan", attributes: .concurrent)
 
-        for app in NSWorkspace.shared.runningApplications {
-            guard let name = app.localizedName else { continue }
-            if shouldSkip(app) { continue }
-
-            let axApp = AXUIElementCreateApplication(app.processIdentifier)
-            guard let extrasRef = copyAttribute(axApp, "AXExtrasMenuBar") else { continue }
-            let extras = extrasRef as! AXUIElement
-            guard let childrenRef = copyAttribute(extras, kAXChildrenAttribute as String),
-                  let children = childrenRef as? [AXUIElement] else { continue }
-
-            for (index, item) in children.enumerated() {
-                guard let point = copyPosition(item) else { continue }
-                guard NotchDetector.isHiddenBehindNotch(
-                    itemX: point.x,
-                    itemY: point.y,
-                    notchRightEdgeX: notchRightEdgeX
-                ) else { continue }
-
-                result.append(HiddenMenuItem(
-                    id: "\(app.processIdentifier)_\(index)",
-                    appName: name,
-                    icon: app.icon,
-                    axElement: item
-                ))
+        for index in apps.indices {
+            queue.async(group: group) {
+                let items = self.hiddenItems(in: apps[index], notchRightEdgeX: notchRightEdgeX)
+                lock.lock()
+                perApp[index] = items
+                lock.unlock()
             }
         }
+        group.wait()
 
-        return result
+        return perApp.flatMap { $0 }
+    }
+
+    private func hiddenItems(in app: NSRunningApplication, notchRightEdgeX: CGFloat) -> [HiddenMenuItem] {
+        let axApp = AXUIElementCreateApplication(app.processIdentifier)
+        AXUIElementSetMessagingTimeout(axApp, Self.messagingTimeout)
+
+        guard let extrasRef = copyAttribute(axApp, "AXExtrasMenuBar") else { return [] }
+        let extras = extrasRef as! AXUIElement
+        guard let childrenRef = copyAttribute(extras, kAXChildrenAttribute as String),
+              let children = childrenRef as? [AXUIElement] else { return [] }
+
+        var items: [HiddenMenuItem] = []
+        for (index, item) in children.enumerated() {
+            guard let point = copyPosition(item) else { continue }
+            guard NotchDetector.isHiddenBehindNotch(
+                itemX: point.x,
+                itemY: point.y,
+                notchRightEdgeX: notchRightEdgeX
+            ) else { continue }
+
+            items.append(HiddenMenuItem(
+                id: "\(app.processIdentifier)_\(index)",
+                appName: app.localizedName ?? "",
+                icon: app.icon,
+                axElement: item
+            ))
+        }
+        return items
     }
 
     // MARK: - 실행
