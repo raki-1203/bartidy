@@ -132,17 +132,32 @@ final class ControlItem {
             return
         }
 
-        let items = HiddenItemScanner.shared.scanHiddenItems()
-        showHiddenItemsPopover(items: items)
+        // 팝업을 로딩 상태로 즉시 띄워 체감 지연을 없앤다. 스캔은 백그라운드에서 돌리고,
+        // 끝나면 model.items를 채워 목록으로 갱신한다.
+        let model = HiddenItemsModel()
+        showHiddenItemsPopover(model: model)
+
+        // 노치 없는 디스플레이면 가려진 항목이 없다.
+        guard let notchRightEdgeX = NSScreen.main?.auxiliaryTopRightArea?.minX else {
+            model.items = []
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            let items = HiddenItemScanner.shared.scanHiddenItems(notchRightEdgeX: notchRightEdgeX)
+            DispatchQueue.main.async {
+                model.items = items
+            }
+        }
     }
 
-    private func showHiddenItemsPopover(items: [HiddenMenuItem]) {
+    private func showHiddenItemsPopover(model: HiddenItemsModel) {
         guard let button = dividerItem.button else { return }
 
         let popover = NSPopover()
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(
-            rootView: HiddenItemsPopover(items: items) { [weak self] item in
+            rootView: HiddenItemsPopover(model: model) { [weak self] item in
                 self?.hiddenItemsPopover?.performClose(nil)
                 HiddenItemScanner.shared.press(item)
             }
