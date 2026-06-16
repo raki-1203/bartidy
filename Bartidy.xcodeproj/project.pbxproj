@@ -8,39 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		300D53422F921E69005ED88E /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 300D53412F921E69005ED88E /* Sparkle */; };
-		9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818DBEC83AF4E249285BBBB /* MenuBarService.swift */; };
 		A1000001253D000100000001 /* BartidyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002253D000100000001 /* BartidyApp.swift */; };
 		A1000003253D000100000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004253D000100000002 /* AppDelegate.swift */; };
-		A1000005253D000100000003 /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006253D000100000003 /* MenuBarPopoverView.swift */; };
-		A1000007253D000100000004 /* MenuBarIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008253D000100000004 /* MenuBarIconRow.swift */; };
 		A1000009253D000100000005 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A253D000100000005 /* SettingsView.swift */; };
-		A100000B253D000100000006 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C253D000100000006 /* MenuBarIcon.swift */; };
-		A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E253D000100000007 /* MenuBarViewModel.swift */; };
 		A100000F253D000100000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000010253D000100000008 /* Assets.xcassets */; };
 		C1000002253D000100000001 /* ControlItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001253D000100000001 /* ControlItem.swift */; };
 		C1000003253D000100000002 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004253D000100000002 /* MenuBarManager.swift */; };
-		E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35DDE2600DE48039930BBBB /* SettingsStore.swift */; };
 		F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */; };
 		T1000001253D000100000001 /* LaunchAtLoginServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9818DBEC83AF4E249285BBBB /* MenuBarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarService.swift; sourceTree = "<group>"; };
 		A1000000253D000000000000 /* Bartidy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bartidy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000002253D000100000001 /* BartidyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BartidyApp.swift; sourceTree = "<group>"; };
 		A1000004253D000100000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1000006253D000100000003 /* MenuBarPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPopoverView.swift; sourceTree = "<group>"; };
-		A1000008253D000100000004 /* MenuBarIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconRow.swift; sourceTree = "<group>"; };
 		A100000A253D000100000005 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		A100000C253D000100000006 /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
-		A100000E253D000100000007 /* MenuBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewModel.swift; sourceTree = "<group>"; };
 		A1000010253D000100000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000011253D000100000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1000001253D000100000001 /* Bartidy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bartidy-Bridging-Header.h"; sourceTree = "<group>"; };
 		B1000002253D000100000002 /* CGSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
 		C1000001253D000100000001 /* ControlItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlItem.swift; sourceTree = "<group>"; };
 		C1000004253D000100000002 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
-		E35DDE2600DE48039930BBBB /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
 		T1000002253D000100000001 /* LaunchAtLoginServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginServiceTests.swift; sourceTree = "<group>"; };
 		T1000003253D000100000001 /* BartidyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartidyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,7 +107,6 @@
 		A10000E4253D000000000000 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A100000C253D000100000006 /* MenuBarIcon.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -127,7 +114,6 @@
 		A10000E5253D000000000000 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A1000006253D000100000003 /* MenuBarPopoverView.swift */,
 				A100000A253D000100000005 /* SettingsView.swift */,
 				A10000E8253D000000000000 /* Components */,
 			);
@@ -137,7 +123,6 @@
 		A10000E6253D000000000000 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				A100000E253D000100000007 /* MenuBarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -153,7 +138,6 @@
 		A10000E8253D000000000000 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				A1000008253D000100000004 /* MenuBarIconRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -161,8 +145,6 @@
 		A10000E9253D000000000000 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				9818DBEC83AF4E249285BBBB /* MenuBarService.swift */,
-				E35DDE2600DE48039930BBBB /* SettingsStore.swift */,
 				F1A3BC0000DE48039930BBBB /* LaunchAtLoginService.swift */,
 			);
 			path = Services;
@@ -289,14 +271,8 @@
 			files = (
 				A1000001253D000100000001 /* BartidyApp.swift in Sources */,
 				A1000003253D000100000002 /* AppDelegate.swift in Sources */,
-				A1000005253D000100000003 /* MenuBarPopoverView.swift in Sources */,
-				A1000007253D000100000004 /* MenuBarIconRow.swift in Sources */,
 				A1000009253D000100000005 /* SettingsView.swift in Sources */,
-				A100000B253D000100000006 /* MenuBarIcon.swift in Sources */,
-				9818DBEC83AF4E249285AAAA /* MenuBarService.swift in Sources */,
-				E35DDE2600DE48039930AAAA /* SettingsStore.swift in Sources */,
 				F1A3BC0000DE48039930AAAA /* LaunchAtLoginService.swift in Sources */,
-				A100000D253D000100000007 /* MenuBarViewModel.swift in Sources */,
 				C1000002253D000100000001 /* ControlItem.swift in Sources */,
 				C1000003253D000100000002 /* MenuBarManager.swift in Sources */,
 			);
