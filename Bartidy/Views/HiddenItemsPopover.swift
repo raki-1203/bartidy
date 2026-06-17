@@ -20,7 +20,7 @@ struct HiddenItemsPopover: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("노치에 가려진 아이콘")
+            Text("숨겨진 아이콘")
                 .font(.headline)
                 .padding(.horizontal, 12)
                 .padding(.top, 10)
@@ -38,7 +38,7 @@ struct HiddenItemsPopover: View {
     private var content: some View {
         if let items = model.items {
             if items.isEmpty {
-                Text("노치에 가려진 아이콘이 없습니다")
+                Text("숨겨진 아이콘이 없습니다")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity)

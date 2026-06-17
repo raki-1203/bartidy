@@ -33,14 +33,14 @@ final class HiddenItemScanner {
     /// 기본 타임아웃(수 초) 대신 짧게 제한한다.
     private static let messagingTimeout: Float = 0.2
 
-    /// 노치에 가려진 메뉴바 status item을 수집한다. 권한이 없으면 빈 배열.
+    /// divider(│) 왼쪽에 있는 메뉴바 status item을 수집한다. 권한이 없으면 빈 배열.
     ///
     /// 메뉴바 아이콘은 UI 앱(`.regular`/`.accessory`)만 만들 수 있으므로 백그라운드 데몬
     /// (`.prohibited`)은 후보에서 제외한다. 남은 앱은 동시 큐에 한꺼번에 던져(웨이브 없이)
     /// AX 조회를 겹쳐서 수행한다. AX 조회는 앱마다 IPC 왕복이라 순차로 돌면 느리다.
     /// **블로킹 호출이므로 백그라운드에서 부른다.**
-    /// - Parameter notchRightEdgeX: 노치 오른쪽 경계(`NSScreen.auxiliaryTopRightArea.minX`).
-    func scanHiddenItems(notchRightEdgeX: CGFloat) -> [HiddenMenuItem] {
+    /// - Parameter dividerX: divider status item의 왼쪽 x좌표. 이보다 왼쪽 항목만 수집한다.
+    func scanHiddenItems(dividerX: CGFloat) -> [HiddenMenuItem] {
         guard isAccessibilityTrusted() else { return [] }
 
         let apps = NSWorkspace.shared.runningApplications.filter {
@@ -56,7 +56,7 @@ final class HiddenItemScanner {
 
         for index in apps.indices {
             queue.async(group: group) {
-                let items = self.hiddenItems(in: apps[index], notchRightEdgeX: notchRightEdgeX)
+                let items = self.hiddenItems(in: apps[index], dividerX: dividerX)
                 lock.lock()
                 perApp[index] = items
                 lock.unlock()
@@ -67,7 +67,7 @@ final class HiddenItemScanner {
         return perApp.flatMap { $0 }
     }
 
-    private func hiddenItems(in app: NSRunningApplication, notchRightEdgeX: CGFloat) -> [HiddenMenuItem] {
+    private func hiddenItems(in app: NSRunningApplication, dividerX: CGFloat) -> [HiddenMenuItem] {
         let axApp = AXUIElementCreateApplication(app.processIdentifier)
         AXUIElementSetMessagingTimeout(axApp, Self.messagingTimeout)
 
@@ -79,10 +79,10 @@ final class HiddenItemScanner {
         var items: [HiddenMenuItem] = []
         for (index, item) in children.enumerated() {
             guard let point = copyPosition(item) else { continue }
-            guard NotchDetector.isHiddenBehindNotch(
+            guard NotchDetector.isLeftOfDivider(
                 itemX: point.x,
                 itemY: point.y,
-                notchRightEdgeX: notchRightEdgeX
+                dividerX: dividerX
             ) else { continue }
 
             items.append(HiddenMenuItem(

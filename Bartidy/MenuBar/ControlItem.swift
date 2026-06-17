@@ -137,14 +137,14 @@ final class ControlItem {
         let model = HiddenItemsModel()
         showHiddenItemsPopover(model: model)
 
-        // 노치 없는 디스플레이면 가려진 항목이 없다.
-        guard let notchRightEdgeX = NSScreen.main?.auxiliaryTopRightArea?.minX else {
+        // divider 왼쪽에 있는 아이콘을 전부 보여준다. divider의 화면 x좌표가 기준.
+        guard let dividerX = dividerItem.button?.window?.frame.origin.x else {
             model.items = []
             return
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            let items = HiddenItemScanner.shared.scanHiddenItems(notchRightEdgeX: notchRightEdgeX)
+            let items = HiddenItemScanner.shared.scanHiddenItems(dividerX: dividerX)
             DispatchQueue.main.async {
                 model.items = items
             }
