@@ -19,19 +19,6 @@
                 type="application/octet-stream" />
         </item>
         <item>
-            <title>Version 1.4.11</title>
-            <pubDate>화, 16  6월 2026 08:08:37 +0000</pubDate>
-            <sparkle:version>10411</sparkle:version>
-            <sparkle:shortVersionString>1.4.11</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;color:#1d1d1f;margin:8px 4px;line-height:1.5;}h2{font-size:14px;margin:0 0 8px 0;}ul{margin:0;padding-left:20px;}li{margin:2px 0;}code{background:#f5f5f7;padding:1px 4px;border-radius:3px;font-size:12px;}</style><h2>What's Changed in v1.4.11</h2><ul><li>docs: 노치 가려진 메뉴바 아이콘 팝업 접근 설계</li><li>docs: 노치 가려진 메뉴바 아이콘 팝업 구현 계획</li><li>refactor: 미사용 CGWindowList 기반 메뉴바 코드 제거</li><li>feat: 노치 가려짐 판정 로직 추가</li><li>feat: 노치 가려진 status item 열거/AXPress 스캐너 추가</li><li>feat: 노치 가려진 아이콘 팝업 뷰 추가</li><li>feat: divider 클릭으로 노치 가려진 아이콘 팝업 표시</li><li>perf: 노치 아이콘 스캔 병렬화 + 팝업 즉시 표시로 응답성 개선</li></ul>]]></description>
-            <enclosure
-                url="https://github.com/raki-1203/bartidy/releases/download/v1.4.11/Bartidy-1.4.11.dmg"
-                sparkle:edSignature="PVJIPimDXyMVd/O1HNDvSx/MJm4v/3vNk3AjPO1SQweJi6DY6N+qUcFI0oneVPM2uCQ6QgAOpjC9dK5dfAbbDA=="
-                length="1412043"
-                type="application/octet-stream" />
-        </item>
-        <item>
             <title>Version 1.4.10</title>
             <pubDate>Wed, 22 Apr 2026 04:07:01 +0000</pubDate>
             <sparkle:version>10410</sparkle:version>
