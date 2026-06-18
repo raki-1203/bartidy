@@ -29,10 +29,10 @@ final class HiddenItemScanner {
 
     // MARK: - 열거
 
-    /// 앱별 AX 메시징 응답을 기다리는 최대 시간(초). 응답이 느린 앱이 스캔 전체를 막지 않도록
-    /// 기본 타임아웃(수 초) 대신 제한한다. 0.2s는 콜드 연결에서 일부 앱이 누락되고, 1.0s는
-    /// 느린 앱이 있으면 스캔이 체감될 만큼 길어진다. 0.3s로 절충한다.
-    private static let messagingTimeout: Float = 0.3
+    /// 앱별 AX 메시징 응답을 기다리는 최대 시간(초) = 응답 안 하는 앱을 기다리는 상한.
+    /// 데워진 앱은 수~수십 ms로 답하므로 정상이면 상한을 다 안 기다린다. 콜드 누락은 실행 시
+    /// warmUp()으로 막으므로 상한을 0.15s까지 낮춰 느린 앱이 있을 때의 대기를 줄인다.
+    private static let messagingTimeout: Float = 0.15
 
     /// divider(│) 왼쪽에 있는 메뉴바 status item을 수집한다. 권한이 없으면 빈 배열.
     ///
