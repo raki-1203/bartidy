@@ -136,10 +136,17 @@ final class ControlItem {
         // 끝나면 model.items를 채워 목록으로 갱신한다.
         let model = HiddenItemsModel()
         showHiddenItemsPopover(model: model)
+        scanLeftOfDivider(into: model, retriesLeft: 5)
+    }
 
-        // divider 왼쪽에 있는 아이콘을 전부 보여준다. divider의 화면 x좌표가 기준.
-        guard let dividerX = dividerItem.button?.window?.frame.origin.x else {
-            model.items = []
+    /// divider 왼쪽 아이콘을 스캔해 model에 채운다. 앱 실행 직후 첫 클릭에선 status item 위치가
+    /// 아직 0으로 잡혀 전부 걸러질 수 있어, 유효 좌표(x>1)가 나올 때까지 잠깐 재시도한다.
+    private func scanLeftOfDivider(into model: HiddenItemsModel, retriesLeft: Int) {
+        guard let dividerX = dividerItem.button?.window?.frame.origin.x, dividerX > 1 else {
+            guard retriesLeft > 0 else { model.items = []; return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+                self?.scanLeftOfDivider(into: model, retriesLeft: retriesLeft - 1)
+            }
             return
         }
 
