@@ -6,6 +6,19 @@
         <description>Most recent Bartidy releases</description>
         <language>en</language>
         <item>
+            <title>Version 1.4.14</title>
+            <pubDate>Thu, 18 Jun 2026 02:08:15 +0000</pubDate>
+            <sparkle:version>10414</sparkle:version>
+            <sparkle:shortVersionString>1.4.14</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;color:#1d1d1f;margin:8px 4px;line-height:1.5;}h2{font-size:14px;margin:0 0 8px 0;}ul{margin:0;padding-left:20px;}li{margin:2px 0;}code{background:#f5f5f7;padding:1px 4px;border-radius:3px;font-size:12px;}</style><h2>What's Changed in v1.4.14</h2><ul><li>fix: 첫 스캔에서 콜드 AX 연결로 일부 앱 누락되는 문제</li></ul>]]></description>
+            <enclosure
+                url="https://github.com/raki-1203/bartidy/releases/download/v1.4.14/Bartidy-1.4.14.dmg"
+                sparkle:edSignature="XsfxTQvvk4bVBYQZ1v7o11up+iT6r/zRL97Kl9q9qgL0pSdHv/Ibg8Zmfg6SxTEYVa3TSoCyD9y7g3wC/s1hAQ=="
+                length="1426490"
+                type="application/octet-stream" />
+        </item>
+        <item>
             <title>Version 1.4.13</title>
             <pubDate>Thu, 18 Jun 2026 01:36:50 +0000</pubDate>
             <sparkle:version>10413</sparkle:version>
