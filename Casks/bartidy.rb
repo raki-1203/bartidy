@@ -1,6 +1,6 @@
 cask "bartidy" do
-  version "1.4.11"
-  sha256 "6f0af2b0aad34bcea0ad7fc9403ad61d670c9d9363855aabdb5463ffa4d4200a"
+  version "1.4.12"
+  sha256 "6cd5444c65a9b1d25c523b58316830ed261715980bef9ff48d2623daa1d8f87d"
 
   url "https://github.com/raki-1203/bartidy/releases/download/v#{version}/Bartidy-#{version}.dmg"
   name "Bartidy"
