@@ -57,6 +57,11 @@ final class ControlItem {
         setupButton()
         setupDivider()
         updateAppearance()
+
+        // 실행 직후 각 앱과의 AX 연결을 미리 데워, 첫 divider 클릭 스캔이 콜드로 누락되지 않게 한다.
+        DispatchQueue.global(qos: .utility).async {
+            HiddenItemScanner.shared.warmUp()
+        }
     }
     
     // MARK: - Migration

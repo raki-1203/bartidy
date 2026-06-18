@@ -68,6 +68,29 @@ final class HiddenItemScanner {
         return perApp.flatMap { $0 }
     }
 
+    /// 앱 실행 직후 각 앱과의 AX 연결을 미리 맺어둔다. AX IPC 연결은 대상 pid 단위로 캐시되므로,
+    /// 여기서 한 번 조회해두면 첫 클릭 스캔이 콜드 상태가 아니라 빠르게 전부 응답한다.
+    /// 결과는 버린다. 권한이 없으면 아무것도 하지 않는다. **블로킹이므로 백그라운드에서 부른다.**
+    func warmUp() {
+        guard isAccessibilityTrusted() else { return }
+
+        let apps = NSWorkspace.shared.runningApplications.filter {
+            $0.activationPolicy != .prohibited && $0.localizedName != nil && !shouldSkip($0)
+        }
+
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "com.bartidy.hiddenitemscanner.warmup", attributes: .concurrent)
+        for app in apps {
+            queue.async(group: group) {
+                let axApp = AXUIElementCreateApplication(app.processIdentifier)
+                // 워밍업은 사용자 비가시라 연결이 확실히 맺히도록 넉넉한 타임아웃을 준다.
+                AXUIElementSetMessagingTimeout(axApp, 2.0)
+                _ = self.copyAttribute(axApp, "AXExtrasMenuBar")
+            }
+        }
+        group.wait()
+    }
+
     private func hiddenItems(in app: NSRunningApplication, dividerX: CGFloat) -> [HiddenMenuItem] {
         let axApp = AXUIElementCreateApplication(app.processIdentifier)
         AXUIElementSetMessagingTimeout(axApp, Self.messagingTimeout)
